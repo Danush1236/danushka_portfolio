@@ -426,13 +426,18 @@ section {
 /* About Section */
 .about {
     background: var(--surface-color);
+    padding: 100px 0;
 }
 
-.about-content {
+.about-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 40px;
     align-items: start;
+}
+
+.about-left {
+    width: 100%;
 }
 
 .about-subtitle {
@@ -474,85 +479,117 @@ section {
     font-size: 24px;
 }
 
-.skills-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 30px;
-    color: var(--text-primary);
+/* Tools Section */
+.about-right {
+    width: 100%;
 }
 
-.skills-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-.skill-item {
+.tools-section {
     background: var(--background-color);
-    padding: 20px;
-    border-radius: 12px;
+    border-radius: 20px;
+    padding: 30px;
     box-shadow: var(--shadow-light);
+    height: 100%;
 }
 
-.skill-info {
+.tools-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.tool-item {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: var(--surface-color);
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
 }
 
-.skill-name {
+.tool-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-light);
+    border-color: var(--primary-color);
+}
+
+.tool-icon {
+    font-size: 1.5rem;
+}
+
+.tool-name {
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text-primary);
 }
 
-.skill-percentage {
-    color: var(--primary-color);
-    font-weight: 600;
+/* Dark Theme */
+[data-theme="dark"] .tools-section {
+    background: rgba(17, 34, 64, 0.7);
+    backdrop-filter: blur(10px);
 }
 
-.skill-bar {
-    width: 100%;
-    height: 8px;
-    background: var(--border-color);
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
+[data-theme="dark"] .tool-item {
+    background: rgba(10, 25, 47, 0.5);
+    border-color: rgba(100, 255, 218, 0.1);
 }
 
-.skill-progress {
-    height: 100%;
-    background: var(--gradient-primary);
-    border-radius: 4px;
-    width: 0;
-    position: relative;
-    overflow: hidden;
-    will-change: width;
-    transform: translateZ(0);
+[data-theme="dark"] .tool-item:hover {
+    border-color: rgba(100, 255, 218, 0.3);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.1);
 }
 
-.skill-progress::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.2) 50%,
-        rgba(255, 255, 255, 0) 100%
-    );
-    animation: shimmer 2s infinite;
-    pointer-events: none;
-}
-
-@keyframes shimmer {
-    0% {
-        transform: translateX(-100%);
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .about-wrapper {
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
-    100% {
-        transform: translateX(100%);
+
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 428px) {
+    .about {
+        padding: 60px 0;
+    }
+
+    .tools-section {
+        padding: 20px;
+    }
+
+    .tools-title {
+        font-size: 1.3rem;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .tool-item {
+        padding: 12px;
+    }
+
+    .tool-icon {
+        font-size: 1.3rem;
+    }
+
+    .tool-name {
+        font-size: 0.95rem;
     }
 }
 
@@ -2147,5 +2184,352 @@ html {
         break-inside: avoid;
         box-shadow: none;
         border: 1px solid #ddd;
+    }
+}
+
+/* Remove all skills-related styles */
+.skills-section,
+.skills-grid,
+.skill-item,
+.skill-info,
+.skill-name,
+.skill-percentage,
+.skill-bar,
+.skill-progress {
+    display: none;
+}
+
+/* Skills Section */
+.skills {
+    background: var(--surface-color);
+    padding: 100px 0;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.skill-category {
+    background: var(--background-color);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-category:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.category-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.skills-cards {
+    display: grid;
+    gap: 20px;
+}
+
+.skill-card {
+    background: var(--surface-color);
+    border-radius: 15px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.skill-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-light);
+    border-color: var(--primary-color);
+}
+
+.skill-icon {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.skill-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.skill-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Dark Theme Skills */
+[data-theme="dark"] .skill-category {
+    background: rgba(17, 34, 64, 0.7);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="dark"] .skill-card {
+    background: rgba(10, 25, 47, 0.5);
+    border-color: rgba(100, 255, 218, 0.1);
+}
+
+[data-theme="dark"] .skill-card:hover {
+    border-color: rgba(100, 255, 218, 0.3);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.1);
+}
+
+/* Responsive Skills */
+@media screen and (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .skill-category {
+        padding: 25px;
+    }
+
+    .category-title {
+        font-size: 1.3rem;
+    }
+}
+
+@media screen and (max-width: 428px) {
+    .skills {
+        padding: 60px 0;
+    }
+
+    .skill-category {
+        padding: 20px;
+    }
+
+    .skill-card {
+        padding: 15px;
+    }
+
+    .skill-icon {
+        font-size: 1.8rem;
+    }
+
+    .skill-name {
+        font-size: 1.1rem;
+    }
+
+    .skill-description {
+        font-size: 0.9rem;
+    }
+}
+
+/* Learning & Trends Section */
+.learning {
+    background: var(--background-color);
+    padding: 100px 0;
+}
+
+.learning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.learning-card {
+    background: var(--surface-color);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.learning-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.learning-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--primary-color);
+}
+
+.learning-card:hover::before {
+    transform: scaleX(1);
+}
+
+.learning-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.learning-icon svg {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.learning-card:hover .learning-icon {
+    transform: scale(1.1);
+    color: var(--secondary-color);
+}
+
+/* Dark Theme Icons */
+[data-theme="dark"] .learning-icon {
+    color: #64ffda;
+}
+
+[data-theme="dark"] .learning-card:hover .learning-icon {
+    color: #8892b0;
+}
+
+/* Responsive Icons */
+@media screen and (max-width: 768px) {
+    .learning-icon {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 15px;
+    }
+}
+
+@media screen and (max-width: 428px) {
+    .learning-icon {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 12px;
+    }
+}
+
+.learning-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+}
+
+.learning-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.learning-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.topic-tag {
+    background: var(--background-color);
+    color: var(--primary-color);
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.topic-tag:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Dark Theme Learning Cards */
+[data-theme="dark"] .learning-card {
+    background: rgba(17, 34, 64, 0.7);
+    backdrop-filter: blur(10px);
+    border-color: rgba(100, 255, 218, 0.1);
+}
+
+[data-theme="dark"] .learning-card:hover {
+    border-color: rgba(100, 255, 218, 0.3);
+    box-shadow: 0 10px 30px rgba(100, 255, 218, 0.1);
+}
+
+[data-theme="dark"] .topic-tag {
+    background: rgba(10, 25, 47, 0.5);
+    border-color: rgba(100, 255, 218, 0.1);
+}
+
+[data-theme="dark"] .topic-tag:hover {
+    background: rgba(100, 255, 218, 0.2);
+    border-color: rgba(100, 255, 218, 0.3);
+    color: #64ffda;
+}
+
+/* Responsive Learning Section */
+@media screen and (max-width: 768px) {
+    .learning-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .learning-card {
+        padding: 25px;
+    }
+
+    .learning-icon {
+        font-size: 2rem;
+    }
+
+    .learning-title {
+        font-size: 1.3rem;
+    }
+}
+
+@media screen and (max-width: 428px) {
+    .learning {
+        padding: 60px 0;
+    }
+
+    .learning-card {
+        padding: 20px;
+    }
+
+    .learning-icon {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+
+    .learning-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .learning-description {
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+    }
+
+    .topic-tag {
+        font-size: 0.8rem;
+        padding: 5px 10px;
     }
 }
