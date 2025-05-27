@@ -68,7 +68,6 @@ window.addEventListener('load', function() {
         initializeAnimations();
         initializeForms();
         initializeParticleEffects();
-        initializeSkillsAnimation();
         initializeHeroAnimations();
     } catch (error) {
         console.warn('Initialization error:', error);
@@ -189,7 +188,7 @@ function initializeHeroAnimations() {
     const heroDescription = document.querySelector('.hero-description');
     const heroButtons = document.querySelector('.hero-buttons');
     const heroImageContainer = document.querySelector('.hero-image');
-    const heroImagePlaceholder = document.querySelector('.image-placeholder');
+    const heroRole = document.querySelector('.hero-role');
     
     if (titleLines.length > 0) {
         gsap.set(titleLines, { y: 100, opacity: 0 });
@@ -227,50 +226,25 @@ function initializeHeroAnimations() {
             }, "-=1");
     }
     
-    // Typewriter effect for role
-    const roleText = document.querySelector('.hero-role');
-    if (roleText) {
-        const roles = ['UI/UX Designer', 'Information Systems Student', 'Creative Problem Solver'];
-        let currentRole = 0;
-        
-        function typewriterEffect() {
-            gsap.to(roleText, {
-                text: roles[currentRole],
-                duration: 2,
-                ease: "none",
-                onComplete: () => {
-                    setTimeout(() => {
-                        currentRole = (currentRole + 1) % roles.length;
-                        gsap.to(roleText, {
-                            text: "",
-                            duration: 1,
-                            ease: "none",
-                            onComplete: typewriterEffect
-                        });
-                    }, 2000);
-                }
-            });
-        }
-        
-        setTimeout(typewriterEffect, 2000);
+    // Set static role text
+    if (heroRole) {
+        heroRole.textContent = 'UI/UX Designer';
     }
     
     // Hero image hover effect
-    if (heroImagePlaceholder) {
-        heroImagePlaceholder.addEventListener('mouseenter', () => {
-            gsap.to(heroImagePlaceholder, {
-                scale: 1.1,
-                rotation: 5,
-                duration: 0.5,
+    if (heroImageContainer) {
+        heroImageContainer.addEventListener('mouseenter', () => {
+            gsap.to(heroImageContainer, {
+                scale: 1.05,
+                duration: 0.3,
                 ease: "power2.out"
             });
         });
         
-        heroImagePlaceholder.addEventListener('mouseleave', () => {
-            gsap.to(heroImagePlaceholder, {
+        heroImageContainer.addEventListener('mouseleave', () => {
+            gsap.to(heroImageContainer, {
                 scale: 1,
-                rotation: 0,
-                duration: 0.5,
+                duration: 0.3,
                 ease: "power2.out"
             });
         });
@@ -705,84 +679,7 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-console.log('🚀 Portfolio with Hobbies section loaded successfully!');
-
-// Skills Animation
-function initializeSkillsAnimation() {
-    console.log('Initializing skills animation...'); // Debug log
-
-    // Set initial state of all progress bars to 0
-    gsap.set('.skill-progress', { 
-        width: '0%',
-        opacity: 0
-    });
-
-    // Create a timeline for skills animation
-    const skillsTimeline = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.skills-grid',
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
-            onEnter: () => console.log('Skills section entered'), // Debug log
-            onLeave: () => console.log('Skills section left'), // Debug log
-            onEnterBack: () => console.log('Skills section entered back'), // Debug log
-            onLeaveBack: () => console.log('Skills section left back') // Debug log
-        }
-    });
-
-    // Animate each skill item
-    const skillItems = document.querySelectorAll('.skill-item');
-    console.log('Found skill items:', skillItems.length); // Debug log
-
-    skillItems.forEach((item, index) => {
-        // Initial state
-        gsap.set(item, { 
-            opacity: 0,
-            y: 30
-        });
-
-        // Add to timeline
-        skillsTimeline.to(item, {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            ease: 'power2.out'
-        }, index * 0.1);
-
-        // Animate the progress bar
-        const progressBar = item.querySelector('.skill-progress');
-        const width = item.getAttribute('data-skill');
-        
-        console.log(`Skill ${index + 1} width:`, width); // Debug log
-
-        if (width) {
-            skillsTimeline.to(progressBar, {
-                width: `${width}%`,
-                opacity: 1,
-                duration: 1.2,
-                ease: 'power2.out',
-                onStart: () => console.log(`Animating skill ${index + 1} to ${width}%`), // Debug log
-                onComplete: () => console.log(`Completed skill ${index + 1} animation`) // Debug log
-            }, index * 0.1);
-        }
-
-        // Animate the skill info
-        const skillInfo = item.querySelector('.skill-info');
-        skillsTimeline.fromTo(skillInfo,
-            { opacity: 0, y: 10 },
-            { 
-                opacity: 1, 
-                y: 0, 
-                duration: 0.5,
-                ease: 'power2.out'
-            }, 
-            index * 0.1
-        );
-    });
-
-    // Force a ScrollTrigger refresh
-    ScrollTrigger.refresh();
-}
+console.log('🚀 Portfolio loaded successfully!');
 
 // Smooth Scrolling for Navigation Links and Buttons
 document.addEventListener('DOMContentLoaded', function() {
