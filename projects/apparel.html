@@ -558,15 +558,36 @@
             transform: translate(-50%, -50%);
             width: 90%;
             height: 90%;
-            background: white;
+            background: #f8f9fa;
             border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
         }
 
         .report-modal iframe {
             width: 100%;
             height: 100%;
             border: none;
+            background: white;
+        }
+
+        .report-modal .modal-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(220, 38, 38, 0.8);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -765,15 +786,17 @@
         function openReportModal() {
             const modal = document.getElementById('reportModal');
             const reportFrame = document.getElementById('reportFrame');
-            reportFrame.src = '../projects/apparel/report.pdf';
+            reportFrame.src = '../projects/apparel/report.pdf#toolbar=1&navpanes=1&scrollbar=1';
             modal.style.display = "block";
+            document.body.style.overflow = 'hidden';
         }
 
         function closeReportModal() {
             const modal = document.getElementById('reportModal');
             const reportFrame = document.getElementById('reportFrame');
             modal.style.display = "none";
-            reportFrame.src = ""; // Clear the iframe source
+            reportFrame.src = "";
+            document.body.style.overflow = 'auto';
         }
 
         // Close report modal when clicking outside
