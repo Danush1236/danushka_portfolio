@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEO House - Project Details</title>
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" as="style">
+    <link rel="preload" href="../styles.css" as="style">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- GSAP - Load only what we need -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="../styles.css">
+    
+    <style>
+        /* Critical CSS - Keep only essential styles */
+        * {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #f1f5f9;
+            line-height: 1.6;
+        }
+
+        .project-hero {
+            min-height: 30vh;
+            background: linear-gradient(135deg, #4a90e2, #8e44ad);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('../projects/neo house/hero.png') center/cover;
+            opacity: 0.2;
+            z-index: 1;
+            animation: zoomEffect 20s ease infinite;
+        }
+
+        @keyframes zoomEffect {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .project-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .project-date {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards 0.2s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-overview {
+            padding: 80px 20px;
+            background: rgba(30, 41, 59, 0.8);
+            position: relative;
+            border-top: 1px solid rgba(51, 65, 85, 0.5);
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .overview-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .overview-section {
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+            background: rgba(30, 41, 59, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #f1f5f9;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 2px;
+        }
+
+        .section-description {
+            color: #e2e8f0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            background: rgba(30, 41, 59, 1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #f1f5f9;
+        }
+
+        .feature-description {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 9/16;
+            cursor: pointer;
+            transform: translateY(0);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #1e293b;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .challenge-solution {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .challenge-box, .solution-box {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .challenge-box:hover, .solution-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            background: rgba(30, 41, 59, 1);
+        }
+
+        .challenge-box h3, .solution-box h3 {
+            color: #f1f5f9;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .challenge-box h3::after, .solution-box h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 2px;
+        }
+
+        .challenge-box p, .solution-box p {
+            color: #94a3b8;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 40px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin: 0 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .cta-button::after {
+            content: '→';
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover::after {
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 768px) {
+            .challenge-solution {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-title {
+                font-size: 2rem;
+            }
+            
+            .gallery-item {
+                aspect-ratio: 9/16;
+            }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            filter: blur(30px);
+        }
+
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            background: #FF6B6B;
+            top: 20%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: #4ECDC4;
+            top: 60%;
+            right: 15%;
+            animation: float 12s ease-in-out infinite;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: #FFE66D;
+            bottom: 30%;
+            left: 20%;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: auto;
+            max-width: 95%;
+            max-height: 95vh;
+        }
+
+        .modal-content img {
+            display: block;
+            max-width: 100%;
+            max-height: 95vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(220, 38, 38, 0.8);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .modal-close:hover {
+            background: rgba(185, 28, 28, 1);
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <a href="../index.html#projects" class="back-button">← Back to Projects</a>
+
+    <section class="project-hero">
+        <div class="project-hero-content">
+            <h1 class="project-title">NEO House</h1>
+            <p class="project-date">2024</p>
+        </div>
+    </section>
+
+    <section class="project-overview">
+        <div class="overview-content">
+            <div class="overview-section">
+                <h2 class="section-title">Project Overview</h2>
+                <p class="section-description">
+                    NEO House is a modern restaurant website prototype designed using Figma. The project focuses on creating an intuitive and 
+                    visually appealing interface that showcases the restaurant's menu, ambiance, and services. The design emphasizes user 
+                    experience and accessibility while maintaining a contemporary aesthetic that reflects the restaurant's brand identity.
+                </p>
+            </div>
+
+            <div class="overview-section">
+                <h2 class="section-title">Key Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">Clear Navigation</h3>
+                        <p class="feature-description">Intuitive menu structure for easy access to all sections</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">ℹ️</div>
+                        <h3 class="feature-title">About Section</h3>
+                        <p class="feature-description">Comprehensive information about the restaurant's story and values</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🍽️</div>
+                        <h3 class="feature-title">Menu Categories</h3>
+                        <p class="feature-description">Well-organized menu sections for different dining options</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📞</div>
+                        <h3 class="feature-title">Contact Page</h3>
+                        <p class="feature-description">Easy-to-use contact form and location information</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overview-section">
+                <h2 class="section-title">Menu Categories</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🚚</div>
+                        <h3 class="feature-title">Delivery Menu</h3>
+                        <p class="feature-description">Specialized menu for takeaway and delivery orders</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🍴</div>
+                        <h3 class="feature-title">Restaurant Food Menu</h3>
+                        <p class="feature-description">Complete dining menu for in-restaurant experience</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🥤</div>
+                        <h3 class="feature-title">Beverage Menu</h3>
+                        <p class="feature-description">Extensive selection of drinks and refreshments</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overview-section">
+                <h2 class="section-title">Design Process</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔍</div>
+                        <h3 class="feature-title">Research</h3>
+                        <p class="feature-description">Studied popular restaurant websites to understand user expectations and industry standards</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📝</div>
+                        <h3 class="feature-title">Wireframing</h3>
+                        <p class="feature-description">Created low-fidelity wireframes to outline layout and user flow</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎨</div>
+                        <h3 class="feature-title">UI Design</h3>
+                        <p class="feature-description">Developed high-fidelity, responsive design focusing on visual hierarchy and accessibility</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✅</div>
+                        <h3 class="feature-title">Testing & Feedback</h3>
+                        <p class="feature-description">Reviewed the design with peers and implemented improvements based on feedback</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overview-section">
+                <h2 class="section-title">Challenge & Solution</h2>
+                <div class="challenge-solution">
+                    <div class="challenge-box">
+                        <h3>Challenge</h3>
+                        <p>Creating an engaging and intuitive menu layout that would effectively showcase the restaurant's diverse offerings while maintaining visual appeal.</p>
+                    </div>
+                    <div class="solution-box">
+                        <h3>Solution</h3>
+                        <p>Implemented a categorized menu system with clear visual hierarchy, high-quality food photography, and interactive elements to enhance user engagement.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overview-section">
+                <h2 class="section-title">Technologies Used</h2>
+                <div class="tech-stack">
+                    <span class="tech-item">Figma</span>
+                </div>
+            </div>
+
+            <div class="overview-section">
+                <h2 class="section-title">Project Gallery</h2>
+                <div class="project-gallery">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="../projects/neo house/Frame 1.png" alt="NEO House Design Frame 1">
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="../projects/neo house/Frame 3.png" alt="NEO House Design Frame 3">
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <a href="https://www.figma.com/design/3gOHbDxLZEIP49Y3RFYVNI/Untitled?node-id=0-1&t=K4ehsSqju8MbRXzR-1" class="cta-button" target="_blank">View Full Design</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe sections for scroll animations
+            const overviewSections = document.querySelectorAll('.overview-section');
+            overviewSections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Modal functions
+            window.openModal = function(element) {
+                const img = element.querySelector('img');
+                const modal = document.getElementById('imageModal');
+                const modalImg = document.getElementById('modalImage');
+                const modalCaption = document.getElementById('modalCaption');
+                
+                modal.style.display = "block";
+                modalImg.src = img.src;
+                modalCaption.innerHTML = img.alt;
+            };
+
+            window.closeModal = function() {
+                document.getElementById('imageModal').style.display = "none";
+            };
+
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('imageModal');
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === "Escape") {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
